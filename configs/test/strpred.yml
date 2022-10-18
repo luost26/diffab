@@ -1,0 +1,24 @@
+mode: single_cdr
+model:
+  checkpoint: ./trained_models/structure_pred.pt
+
+sampling:
+  seed: 2022
+  sample_structure: true
+  sample_sequence: false
+  cdrs:
+    - H_CDR1
+    - H_CDR2
+    - H_CDR3
+    - L_CDR1
+    - L_CDR2
+    - L_CDR3
+  num_samples: 100
+
+dataset:
+  test:
+    type: sabdab
+    summary_path: ./data/sabdab_summary_all.tsv
+    chothia_dir: ./data/all_structures/chothia
+    processed_dir: ./data/processed
+    split: test

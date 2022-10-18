@@ -1,0 +1,27 @@
+mode: abopt
+model:
+  checkpoint: ./trained_models/codesign_single.pt
+
+sampling:
+  seed: 2022
+  sample_structure: true
+  sample_sequence: true
+  cdrs:
+    - H_CDR3
+  num_samples: 100
+  optimize_steps:
+    - 1
+    - 2
+    - 4
+    - 8
+    - 16
+    - 32
+    - 64
+
+dataset:
+  test:
+    type: sabdab
+    summary_path: ./data/sabdab_summary_all.tsv
+    chothia_dir: ./data/all_structures/chothia
+    processed_dir: ./data/processed
+    split: test
