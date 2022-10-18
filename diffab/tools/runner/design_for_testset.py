@@ -12,7 +12,6 @@ from diffab.modules.common.so3 import so3vec_to_rotation
 from diffab.utils.inference import RemoveNative
 from diffab.utils.protein.writers import save_pdb
 from diffab.utils.train import recursive_to
-from diffab.utils.vc import *
 from diffab.utils.misc import *
 from diffab.utils.data import *
 from diffab.utils.transforms import *

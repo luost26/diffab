@@ -212,6 +212,11 @@ class SAbDabDataset(Dataset):
         super().__init__()
         self.summary_path = summary_path
         self.chothia_dir = chothia_dir
+        if not os.path.exists(chothia_dir):
+            raise FileNotFoundError(
+                f"SAbDab structures not found in {chothia_dir}. "
+                "Please download them from http://opig.stats.ox.ac.uk/webapps/newsabdab/sabdab/archive/all/"
+            )
         self.processed_dir = processed_dir
         os.makedirs(processed_dir, exist_ok=True)
 

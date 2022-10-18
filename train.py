@@ -11,7 +11,6 @@ torch.backends.cudnn.allow_tf32 = True
 
 from diffab.datasets import get_dataset
 from diffab.models import get_model
-from diffab.utils.vc import *
 from diffab.utils.misc import *
 from diffab.utils.data import *
 from diffab.utils.train import *
@@ -29,14 +28,6 @@ if __name__ == '__main__':
     parser.add_argument('--finetune', type=str, default=None)
     args = parser.parse_args()
 
-    # Version control
-    branch, version = get_version()
-    version_short = '%s-%s' % (branch, version[:7])
-    if has_changes() and not args.debug:
-        c = input('Start training anyway? (y/n) ')
-        if c != 'y':
-            exit()
-
     # Load configs
     config, config_name = load_config(args.config)
     seed_all(config.train.seed)
@@ -49,10 +40,7 @@ if __name__ == '__main__':
         if args.resume:
             log_dir = os.path.dirname(os.path.dirname(args.resume))
         else:
-            log_dir = get_new_log_dir(args.logdir, prefix='%s[%s]' % (config_name, version_short), tag=args.tag)
-        with open(os.path.join(log_dir, 'commit.txt'), 'w') as f:
-            f.write(branch + '\n')
-            f.write(version + '\n')
+            log_dir = get_new_log_dir(args.logdir, prefix=config_name, tag=args.tag)
         ckpt_dir = os.path.join(log_dir, 'checkpoints')
         if not os.path.exists(ckpt_dir): os.makedirs(ckpt_dir)
         logger = get_logger('train', log_dir)

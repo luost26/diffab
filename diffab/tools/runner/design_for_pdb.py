@@ -12,7 +12,6 @@ from diffab.modules.common.so3 import so3vec_to_rotation
 from diffab.utils.inference import RemoveNative
 from diffab.utils.protein.writers import save_pdb
 from diffab.utils.train import recursive_to
-from diffab.utils.vc import *
 from diffab.utils.misc import *
 from diffab.utils.data import *
 from diffab.utils.transforms import *
@@ -106,8 +105,15 @@ def design_for_pdb(args):
     else:
         in_pdb_path = args.pdb_path
         out_pdb_path = os.path.splitext(in_pdb_path)[0] + '_chothia.pdb'
-        renumber_antibody(in_pdb_path, out_pdb_path)
+        heavy_chains, light_chains = renumber_antibody(in_pdb_path, out_pdb_path)
         pdb_path = out_pdb_path
+
+        if args.heavy is None and len(heavy_chains) > 0:
+            args.heavy = heavy_chains[0]
+        if args.light is None and len(light_chains) > 0:
+            args.light = light_chains[0]
+    if args.heavy is None and args.light is None:
+        raise ValueError("Neither heavy chain id (--heavy) or light chain id (--light) is specified.")
     get_structure = lambda: preprocess_antibody_structure({
         'id': data_id,
         'pdb_path': pdb_path,
@@ -252,8 +258,8 @@ def design_for_pdb(args):
 def args_from_cmdline():
     parser = argparse.ArgumentParser()
     parser.add_argument('pdb_path', type=str)
-    parser.add_argument('--heavy', type=str, default='H', help='Chain id of the heavy chain.')
-    parser.add_argument('--light', type=str, default='L', help='Chain id of the light chain.')
+    parser.add_argument('--heavy', type=str, default=None, help='Chain id of the heavy chain.')
+    parser.add_argument('--light', type=str, default=None, help='Chain id of the light chain.')
     parser.add_argument('--no_renumber', action='store_true', default=False)
     parser.add_argument('-c', '--config', type=str, default='./configs/test/codesign_single.yml')
     parser.add_argument('-o', '--out_root', type=str, default='./results')
