@@ -39,7 +39,7 @@ Ray is required to relax and evaluate the generated antibodies. Please install R
 pip install -U ray
 ```
 
-## Design
+## Design Antibodies
 
 5 design modes are available. Each mode corresponds to a config file in the `configs/test` folder:
 
@@ -53,7 +53,7 @@ pip install -U ray
 
 ### Antibody-Antigen Complex
 
-Below is the usage of `design_pdb.py`. It samples CDRs for structures with an antibody bound to the antigen. The full list of options can be found in [`diffab/tools/runner/design_for_pdb.py`](diffab/tools/runner/design_for_pdb.py).
+Below is the usage of `design_pdb.py`. It samples CDRs for antibody-antigen complexes. The full list of options can be found in [`diffab/tools/runner/design_for_pdb.py`](diffab/tools/runner/design_for_pdb.py).
 
 ```bash
 python design_pdb.py \
@@ -85,7 +85,7 @@ python design_dock.py \
 
 The `--antibody` option is optional and the default antibody template is [`3QHF_Fv.pdb`](data/examples/3QHF_Fv.pdb). The full list of options can be found in the script.
 
-Below is an example that designs antibodies for SARS-2 Omicron RBD.
+Below is an example that designs antibodies for SARS-CoV-2 Omicron RBD.
 
 ```python
 python design_dock.py \
