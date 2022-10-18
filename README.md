@@ -17,19 +17,19 @@ The default `cudatoolkit` version is 11.3. You may change it in [`env.yaml`](./e
 
 ### Datasets and Trained Weights
 
-Protein structures in the `SAbDab` dataset can be downloaded [:package: **here**](http://opig.stats.ox.ac.uk/webapps/newsabdab/sabdab/archive/all/). Extract `all_structures.zip` into the `data` folder. 
+Protein structures in the `SAbDab` dataset can be downloaded [**here**](https://opig.stats.ox.ac.uk/webapps/newsabdab/sabdab/archive/all/). Extract `all_structures.zip` into the `data` folder. 
 
-The `data` folder contains a snapshot of the dataset index (`sabdab_summary_all.tsv`). You may replace the index with the latest version [:books: **here**](http://opig.stats.ox.ac.uk/webapps/newsabdab/sabdab/summary/all/).
+The `data` folder contains a snapshot of the dataset index (`sabdab_summary_all.tsv`). You may replace the index with the latest version [**here**](https://opig.stats.ox.ac.uk/webapps/newsabdab/sabdab/summary/all/).
 
-Trained model weights are available [:hamburger: **here**](https://drive.google.com/drive/folders/15ANqouWRTG2UmQS_p0ErSsrKsU4HmNQc?usp=sharing).
+Trained model weights are available [**here**](https://drive.google.com/drive/folders/15ANqouWRTG2UmQS_p0ErSsrKsU4HmNQc?usp=sharing).
 
 ### [Optional] HDOCK
 
-HDOCK is required to design CDRs for antigens without bound antibody frameworks. Please download HDOCK [:package: **here**](http://huanglab.phys.hust.edu.cn/software/hdocklite/) and put the `hdock` and `createpl` programs into the [`bin`](./bin) folder.
+HDOCK is required to design CDRs for antigens without bound antibody frameworks. Please download HDOCK [**here**](http://huanglab.phys.hust.edu.cn/software/hdocklite/) and put the `hdock` and `createpl` programs into the [`bin`](./bin) folder.
 
 ### [Optional] PyRosetta
 
-PyRosetta is required to relax the generated structures and compute binding energy. Please follow the instruction [:package: **here**](https://www.pyrosetta.org/downloads) to install.
+PyRosetta is required to relax the generated structures and compute binding energy. Please follow the instruction [**here**](https://www.pyrosetta.org/downloads) to install.
 
 ### [Optional] Ray
 
@@ -57,10 +57,10 @@ Below is the usage of `design_pdb.py`. It samples CDRs for structures with an an
 
 ```bash
 python design_pdb.py \
-		<path-to-pdb> \
-		--heavy <heavy-chain-id> \
-		--light <light-chain-id> \
-		--config <path-to-config-file>
+	<path-to-pdb> \
+	--heavy <heavy-chain-id> \
+	--light <light-chain-id> \
+	--config <path-to-config-file>
 ```
 
 The `--heavy` and  `--light` options can be omitted as the script can automatically identify them with AbNumber and ANARCI.
@@ -69,7 +69,7 @@ The below example designs the six CDRs separately for the `7DK2_AB_C` antibody-a
 
 ```bash
 python design_pdb.py ./data/examples/7DK2_AB_C.pdb \
-		--config ./config/test/codesign_single.yml
+	--config ./config/test/codesign_single.yml
 ```
 
 ### Antigen Only
@@ -78,9 +78,9 @@ HDOCK is required to design antibodies for antigens without bound antibody struc
 
 ```bash
 python design_dock.py \
-		--antigen <path-to-antigen-pdb> \
-		--antibody <path-to-antibody-template-pdb> \
-		--config <path-to-config-file>
+	--antigen <path-to-antigen-pdb> \
+	--antibody <path-to-antibody-template-pdb> \
+	--config <path-to-config-file>
 ```
 
 The `--antibody` option is optional and the default antibody template is [`3QHF_Fv.pdb`](data/examples/3QHF_Fv.pdb). The full list of options can be found in the script.
@@ -89,8 +89,8 @@ Below is an example that designs antibodies for SARS-2 Omicron RBD.
 
 ```python
 python design_dock.py \
-		--antigen ./data/examples/Omicron_RBD.pdb \
-		--config ./config/test/codesign_multicdrs.yml
+	--antigen ./data/examples/Omicron_RBD.pdb \
+	--config ./config/test/codesign_multicdrs.yml
 ```
 
 ## Train
