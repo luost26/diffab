@@ -8,7 +8,7 @@ from diffab.tools.runner.design_for_pdb import args_factory, design_for_pdb
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--antigen', type=str, required=True)
-    parser.add_argument('--antibody', type=str, default='./data/example_dock/3QHF_Fv.pdb')
+    parser.add_argument('--antibody', type=str, default='./data/examples/3QHF_Fv.pdb')
     parser.add_argument('--heavy', type=str, default='H', help='Chain id of the heavy chain.')
     parser.add_argument('--light', type=str, default='L', help='Chain id of the light chain.')
     parser.add_argument('--hdock_bin', type=str, default='./bin/hdock')
