@@ -40,13 +40,13 @@ def renumber_biopython_chain(chain_id, residue_list: List[Residue.Residue], numb
     return chain
 
 
-def renumber(in_pdb, out_pdb):
+def renumber(in_pdb, out_pdb, return_other_chains=False):
     parser = PDB.PDBParser(QUIET=True)
     structure = parser.get_structure(None, in_pdb)
     model = structure[0]
     model_new = Model.Model(0)
 
-    heavy_chains, light_chains = [], []
+    heavy_chains, light_chains, other_chains = [], [], []
 
     for chain in model:
         try:
@@ -61,12 +61,16 @@ def renumber(in_pdb, out_pdb):
         except abnumber.ChainParseError as e:
             print(f'[INFO] Chain {chain.id} does not contain valid Fv: {str(e)}')
             chain_new = chain.copy()
+            other_chains.append(chain_new.id)
         model_new.add(chain_new)
 
     pdb_io = PDB.PDBIO()
     pdb_io.set_structure(model_new)
     pdb_io.save(out_pdb)
-    return heavy_chains, light_chains
+    if return_other_chains:
+        return heavy_chains, light_chains, other_chains
+    else:
+        return heavy_chains, light_chains
 
 
 def main():
