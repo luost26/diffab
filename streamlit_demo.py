@@ -304,7 +304,6 @@ def main():
 
         with left_col:
             output_display = st.empty()
-        output_display.code('[INFO] Your job has been submitted. Please wait...\n')
 
         with right_col:
             result_molecule_display = st.empty()
@@ -312,14 +311,16 @@ def main():
             result_table_display = st.empty()
             result_download_btn = st.empty()
 
-        config, config_path = get_config(
-            save_dir = tempdir_path,
-            mode = design_mode,
-            cdrs = cdr_choices,
-            num_samples = num_designs,
-        )
-
         if not st.session_state.done:
+            output_display.code('[INFO] Your job has been submitted. Please wait...\n')
+
+            config, config_path = get_config(
+                save_dir = tempdir_path,
+                mode = design_mode,
+                cdrs = cdr_choices,
+                num_samples = num_designs,
+            )
+
             run_design(
                 pdb_path = renum_path,
                 config_path = config_path,
