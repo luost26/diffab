@@ -1,3 +1,5 @@
+import sys
+sys.path.append('./diffab-repo')
 import os
 import shutil
 import pandas as pd
@@ -192,7 +194,10 @@ def main():
         )
 
         if uploaded_file is None:
-            with st.expander('Download examples', expanded=True):
+            st.session_state.submit = False
+            st.session_state.done = False
+
+            with st.expander("Don't know what to upload? Try these examples", expanded=True):
                 with open('./data/examples/7DK2_AB_C.pdb', 'r') as f:
                     st.download_button(
                         'RBD + Antibody Complex', 
@@ -201,16 +206,11 @@ def main():
                     )
                 with open('./data/examples/Omicron_RBD.pdb', 'r') as f:
                     st.download_button(
-                        'RBD Antigen Only', 
+                        'RBD Antigen Only (Much slower)', 
                         data = f,
                         file_name = 'RBD_AgOnly.pdb',
                     )
                 st.text('Please upload the downloaded PDB file to run the demo.')
-
-    if 'submit' not in st.session_state:
-        st.session_state.submit = False
-    if 'done' not in st.session_state:
-        st.session_state.done = False
 
     # Step 1.2: Retrieve uploaded PDB
     if uploaded_file is not None:
@@ -234,9 +234,13 @@ def main():
                 'Heavy': {'Chain': H_chain},
                 'Light': {'Chain': L_chain},
                 'Antigen': {'Chain': ','.join(Ag_chains)},
-            }), use_container_width=True)
+            }))
 
-            form = st.form('design_form')
+            if docking:
+                st.warning('No antibodies detected. Will try to run docking (very slow).')
+
+            # form = st.form('design_form')
+            form = st.container()
             with form:
                 if H_chain is None and L_chain is None:
                     # Antigen only
@@ -285,13 +289,29 @@ def main():
                     min_value=1, max_value=10, value=DEFAULT_NUM_SAMPLES,
                 )
 
-                submit = st.form_submit_button('Run')
+                if not GPU_AVAILABLE:
+                    st.warning('No GPU available. Sampling might be very slow.')
+
+                btn_placeholder = st.empty()
+                submit = btn_placeholder.button('Run', key="run_btn_real")
                 st.session_state.submit = st.session_state.submit or submit
                 if submit:
                     st.session_state.done = False
+                    btn_placeholder.empty()
 
     # Step 3: Prepare configuration and run design
     if uploaded_file is not None and st.session_state.submit:
+
+        with left_col:
+            output_display = st.empty()
+        output_display.code('[INFO] Your job has been submitted. Please wait...\n')
+
+        with right_col:
+            result_molecule_display = st.empty()
+            result_select_widget = st.empty()
+            result_table_display = st.empty()
+            result_download_btn = st.empty()
+
         config, config_path = get_config(
             save_dir = tempdir_path,
             mode = design_mode,
@@ -299,12 +319,6 @@ def main():
             num_samples = num_designs,
         )
 
-        with right_col:
-            result_molecule_display = st.empty()
-            result_select_widget = st.empty()
-            result_table_display = st.empty()
-            result_download_btn = st.empty()
-            output_display = st.empty()
         if not st.session_state.done:
             run_design(
                 pdb_path = renum_path,
@@ -327,7 +341,7 @@ def main():
         df_results, fpath_to_name = st.session_state.results
 
         df_cols = ['name'] + list(CDR_OPTIONS.values())
-        result_table_display.dataframe(df_results[df_cols], use_container_width=True)
+        result_table_display.dataframe(df_results[df_cols])
 
         display_pdb_path = result_select_widget.selectbox(
             label = "Visualize",
