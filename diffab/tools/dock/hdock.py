@@ -136,16 +136,22 @@ class HDockAntibody(HDock):
         if not (self._has_receptor and self._has_ligand):
             raise ValueError('Missing receptor or ligand.')
         self._prepare_lsite()
-        cmd = [self.hdock_bin, "receptor.pdb", "ligand.pdb", "-lsite", "lsite.txt"]
+
+        cmd_hdock = [self.hdock_bin, "receptor.pdb", "ligand.pdb", "-lsite", "lsite.txt"]
         if self._epitope_sites is not None:
             self._prepare_rsite()
-            cmd += ["-rsite", "rsite.txt"]
+            cmd_hdock += ["-rsite", "rsite.txt"]
         subprocess.run(
-            cmd,
+            cmd_hdock,
             cwd=self.tmpdir.name, check=True
         )
+
+        cmd_pl = [self.createpl_bin, "Hdock.out", "ligand_docked.pdb", "-lsite", "lsite.txt"]
+        if self._epitope_sites is not None:
+            self._prepare_rsite()
+            cmd_pl += ["-rsite", "rsite.txt"]
         subprocess.run(
-            [self.createpl_bin, "Hdock.out", "ligand_docked.pdb"], 
+            cmd_pl, 
             cwd=self.tmpdir.name, check=True
         )
         return self._dump_complex_pdb()

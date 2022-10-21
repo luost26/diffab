@@ -25,7 +25,7 @@ def create_data_variants(config, structure_factory):
 
     data_variants = []
     if config.mode == 'single_cdr':
-        cdrs = sorted(list(set(find_cdrs(structure)).union(config.sampling.cdrs)))
+        cdrs = sorted(list(set(find_cdrs(structure)).intersection(config.sampling.cdrs)))
         for cdr_name in cdrs:
             transform = Compose([
                 MaskSingleCDR(cdr_name, augmentation=False),
