@@ -21,7 +21,7 @@ Protein structures in the `SAbDab` dataset can be downloaded [**here**](https://
 
 The `data` folder contains a snapshot of the dataset index (`sabdab_summary_all.tsv`). You may replace the index with the latest version [**here**](https://opig.stats.ox.ac.uk/webapps/newsabdab/sabdab/summary/all/).
 
-Trained model weights are available [**here** (Hugging Face)](https://huggingface.co/spaces/luost26/DiffAb/tree/main/trained_models) or [**here** (Google Drive)](https://drive.google.com/drive/folders/15ANqouWRTG2UmQS_p0ErSsrKsU4HmNQc?usp=sharing).
+Trained model weights are available [**here** (Hugging Face)](https://huggingface.co/luost26/DiffAb/tree/main) or [**here** (Google Drive)](https://drive.google.com/drive/folders/15ANqouWRTG2UmQS_p0ErSsrKsU4HmNQc?usp=sharing).
 
 ### [Optional] HDOCK
 
