@@ -2,7 +2,9 @@
 
 ![cover-large](./assets/cover-large.png)
 
-Antigen-Specific Antibody Design and Optimization with Diffusion-Based Generative Models for Protein Structures (NeurIPS 2022) [[Paper](https://www.biorxiv.org/content/10.1101/2022.07.10.499510.abstract)]
+Antigen-Specific Antibody Design and Optimization with Diffusion-Based Generative Models for Protein Structures (NeurIPS 2022) 
+
+[[Paper]](https://www.biorxiv.org/content/10.1101/2022.07.10.499510.abstract)[[Demo]](https://huggingface.co/spaces/luost26/DiffAb)
 
 ## Install
 
@@ -101,4 +103,13 @@ python train.py ./configs/train/<config-file-name>
 
 ## Reference
 
-:construction: Coming soon...
+```bibtex
+@inproceedings{luo2022antigenspecific,
+  title={Antigen-Specific Antibody Design and Optimization with Diffusion-Based Generative Models for Protein Structures},
+  author={Shitong Luo and Yufeng Su and Xingang Peng and Sheng Wang and Jian Peng and Jianzhu Ma},
+  booktitle={Advances in Neural Information Processing Systems},
+  editor={Alice H. Oh and Alekh Agarwal and Danielle Belgrave and Kyunghyun Cho},
+  year={2022},
+  url={https://openreview.net/forum?id=jSorGn2Tjg}
+}
+```
